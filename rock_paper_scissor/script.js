@@ -41,25 +41,92 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
+let counter = 0;
+let playerWin = 0;
+let computerWins = 0;
+
+function updateWinner(playRound){
+    if(playRound ===`Player wins`) playerWin++;
+    else if(playRound === `Computer wins`) computerWins ++;
+}
+
 const rock = document.querySelector('#btnRock');
-function chooseRock(e){
-    const playerSelection = `rock`;
-    const computerSelection = getComputerChoice();
-    console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);}
+const result = document.querySelector('#result');
+result.textContent = `Result: `;
+
+const finalResult = document.querySelector('#finalResult');
+finalResult.textContent = `Final Result: `;
+
+function updateFinal(){
+    if(playerWin > computerWins){
+        finalResult.textContent += `Final Winner is Player with ${playerWin} out of 5`;
+    }
+    else if(playerWin < computerWins){
+        finalResult.textContent += `Final Winner is computer with ${computerWins} out of 5`;
+    }
+    else if(playerWin === computerWins){
+        finalResult.textContent += `Final Result is a Draw with ${computerWins} wins for Computer and ${playerWin} for Player`;
+
+    }
+    
+    playerWin = 0;
+    computerWins = 0;
+    counter = 0;
+}
+function chooseRock(e){    
+    if(counter === 5){
+        updateFinal();
+    }
+    else{
+        finalResult.textContent = `Final Result: `;
+        result.textContent = `Result: `;
+        const playerSelection = `rock`;
+        const computerSelection = getComputerChoice();    
+        console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);
+        result.textContent += `${playRound(playerSelection, computerSelection)}`;
+        updateWinner(playRound(playerSelection, computerSelection));
+        counter++;
+    }
+    
+}
+    
 rock.addEventListener('click', chooseRock);
 
 const paper = document.querySelector('#btnPaper');
 function choosePaper(e){
-    const playerSelection = `paper`;
-    const computerSelection = getComputerChoice();
-    console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);}
+    if(counter === 5){
+        updateFinal();
+    }
+    //else {
+        finalResult.textContent = `Final Result: `;
+        result.textContent = `Result: `;
+        const playerSelection = `paper`;
+        const computerSelection = getComputerChoice();
+        console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);
+        result.textContent += `${playRound(playerSelection, computerSelection)}`;
+        updateWinner(playRound(playerSelection, computerSelection));
+        counter++;
+   // }
+    
+}
 paper.addEventListener('click', choosePaper);
 
 const scissor = document.querySelector('#btnScissor');
 function chooseScissor(e){
-    const playerSelection = `scissor`;
-    const computerSelection = getComputerChoice();
-    console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);
+    if(counter === 5){
+        updateFinal();
+    }
+    else {
+        finalResult.textContent = `Final Result: `;
+        result.textContent = `Result: `;
+        const playerSelection = `scissor`;
+        const computerSelection = getComputerChoice();
+        console.log(`Player: ${playerSelection}, Computer: ${computerSelection} \t ${playRound(playerSelection, computerSelection)}`);
+        result.textContent += `${playRound(playerSelection, computerSelection)}`;
+        updateWinner(playRound(playerSelection, computerSelection));
+        counter++;
+    }
+    
 }
 scissor.addEventListener('click', chooseScissor);
 
